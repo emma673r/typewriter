@@ -40,7 +40,21 @@ function loop() {
 
     char--;
 
-    setTimeout(loop, 250);
+    // setTimeout(loop, 250);
+
+
+      if (typewritten === "e", "n", "s", "t") {
+        console.log(`1`);
+        
+        setTimeout(loop, 150);
+      } else if (typewritten == "i", "h", "x") {
+        console.log(`2`);
+        setTimeout(loop, 250);
+      } else {
+        console.log(`3`);
+        setTimeout(loop, 190);
+      }
+
   } else {
     start();
   }
