@@ -1,106 +1,80 @@
 "use strict";
 
-// all let
+window.addEventListener("load", start);
+
+const string = document.querySelector(".typewritten").textContent;
+const typewritten = document.querySelector(".typewritten");
+
+const soundBtn = document.getElementById("soundBtn");
+
+const typeKey1 = document.querySelector("#typekey1");
+const typeKey2 = document.querySelector("#typekey2");
+const typeSpace = document.querySelector("#typespace");
+const typeLast = document.querySelector("#typelast");
+const typeReturn = document.querySelector("#typereturn");
+
+
 let char;
-let string;
-let maxChar;
+let speed;
+let speedSet;
+let keyRandom;
 
-// all const
-const h1 = document.getElementById("typewriter");
 
-const musicBtn = document.getElementById("soundBtn");
 
-const soundKey1 = document.getElementById("typekey1");
-const soundKey2 = document.getElementById("typekey2");
-const soundSpace = document.getElementById("typespace");
-const soundLast = document.getElementById("typeLast");
-const soundReturn = document.getElementById("typereturn");
-
-window.addEventListener("DOMContentLoaded", start);
-
-// start function
 function start() {
-  musicBtn.removeEventListener("click", musicOn);
-  string = h1.textContent.toString();
-  console.log(string);
-  h1.textContent = "";
-  maxChar = string.length;
-
-  char = maxChar;
-  console.log(maxChar);
-  console.log(char);
-
-  musicBtn.addEventListener("click", musicOn);
-
-  loop();
+  // console.log("start");
+  typewritten.textContent = "";
+  initTextLoop();
+  soundBtn.addEventListener("click", playSound);
 }
 
-function loop() {
-  console.log(`loop`);
+function initTextLoop() {
+  // console.log("initTextLoop");
+  char = -1;
+typewritten.textContent = "";
+  textLoop();
+}
 
-  if (char <= maxChar && char >= 1) {
-    console.log(string);
-    console.log(char);
-    console.log(maxChar);
-    console.log(string[char]);
 
-    let typewritten;
-    typewritten = string[maxChar - char];
-    h1.textContent += typewritten;
-    h1.classList.add("typewritten");
 
-    char--;
+function playSound() {
+    console.log(`playSound`);
 
-    // setTimeout(loop, 250);
-
-    if (typewritten === "e" || typewritten === "s" || typewritten === "t") {
-      console.log(`1`);
-
-      setTimeout(loop, 150);
-    } else if (typewritten == "i" || typewritten === "h" || typewritten === "o") {
-      console.log(`2`);
-      setTimeout(loop, 250);
-    } else {
-      console.log(`3`);
-      setTimeout(loop, 190);
-    }
+  if (string[char] === " ") {
+    // console.log(`space`);
+    typeSpace.play();
+  } else if (string[char] === "e" || string[char] === "s" || string[char] === "t" || string[char] === ".") {
+    // console.log("Type1");
+    typeKey1.play();
   } else {
-    start();
+    // console.log("Type2");
+    typeKey2.play();
   }
 }
 
-function musicOn() {
-  console.log(`musicOn`);
-  musicBtn.removeEventListener("click", musicOn);
+function setSpeed() {
+    // do the math random thing
+  speed = Math.floor(Math.random() * 3) + 1;
+  if (speed === 1) {
+    speedSet = 700;
+  } else if (speed === 2) {
+    speedSet = 850;
+  } else if (speed === 3) {
+    speedSet = 1050;
+  }
+}
 
-  if (char <= maxChar && char >= 1) {
-    console.log(string);
-    console.log(char);
-    console.log(maxChar);
-    console.log(string[char]);
-
-    let typewritten;
-    typewritten = string[maxChar - char];
-    h1.textContent += typewritten;
-    h1.classList.add("typewritten");
-    // !!!!!!!! add sound for clicks and spaces here
-
-    char--;
-
-    // setTimeout(loop, 250);
-
-    if (typewritten === "e" || typewritten === "s" || typewritten === "t") {
-      console.log(`1`);
-
-      setTimeout(musicOn, 150);
-    } else if (typewritten == "i" || typewritten === "h" || typewritten === "o") {
-      console.log(`2`);
-      setTimeout(musicOn, 250);
-    } else {
-      console.log(`3`);
-      setTimeout(musicOn, 190);
-    }
+function textLoop() {
+  // console.log("char", char);
+  char++;
+  // console.log("char", char);
+  if (char < string.length) {
+    typewritten.innerHTML += string[char];
+    setSpeed();
+    setTimeout(textLoop, speedSet);
+    playSound();
   } else {
-    start();
+    console.log("done and all");
+    setTimeout(start, 1500);
   }
 }
