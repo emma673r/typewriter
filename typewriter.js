@@ -43,12 +43,12 @@ function playSound() {
   if (string[char] === " ") {
     // console.log(`space`);
     typeSpace.play();
-  } else if (string[char] === "e" || string[char] === "s" || string[char] === "t" || string[char] === ".") {
+  } else if (string[char] === "e" || string[char] === "s" || string[char] === ".") {
     // console.log("Type1");
-    typeKey1.play();
+    typeKey2.play();
   } else {
     // console.log("Type2");
-    typeKey2.play();
+    typeKey1.play();
   }
 }
 
